@@ -1,11 +1,31 @@
 var express = require('express');
+var bodyParser = require('body-parser');
 var app = express();
 
+//create json parser
+var jsonParser = bodyParser.json();
+var urlencondedParser = bodyParser.urlencoded({extended: false});
+
+
+const cors = require('cors');
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    credentials: true,
+    optionSuccessStatus: 200
+}
+
+app.use(cors(corsOptions));
+// app.use(express.json());
+/**
+ *      Routing
+ */
 app.get("/", function(req, res, next) {
     res.send("Hello world!");
 });
 
-app.post("/auth/login", function(req, res, next) {
+app.post("/auth/login", urlencondedParser, function(req, res, next) {
+    const {username, password} = req.body;
+    console.log(req.body);
     res.send("Okay");
 });
 
