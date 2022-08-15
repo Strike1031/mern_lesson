@@ -1,12 +1,21 @@
 import React, { useState,} from "react";
 import Loading from "../../components/loading";
 import axios from "axios";
+import {ClipLoader} from "react-spinners";
 
 export default function LoginPage(props) {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
+
+
+    // Can be a string as well. Need to ensure each key-value pair ends with ;
+    const override = `
+    display: block;
+    margin: 0 auto;
+    border-color: red;
+    `;
 
     const handleUsernameChange = (e) => {
         setUsername(e.target.value);
@@ -83,7 +92,7 @@ export default function LoginPage(props) {
 
     return (
         <div>
-            {loading && <Loading />}
+            {/* {loading && <Loading />} */}
             <div className="login-panel">
                 <form>
                     <div className="form-group">
@@ -95,7 +104,10 @@ export default function LoginPage(props) {
                         <input type="password" onChange={handlePasswordChange} value={password} />
                     </div>
                     <div className="form-group">
-                        <button onClick={userLogin}>Login</button>  
+                        <button onClick={userLogin} className="btn-login" disabled={loading}>
+                            <div>Login</div>
+                            <ClipLoader color="green" loading={loading} css={override} size={30}/> 
+                        </button> 
                     </div>
                 </form>
             </div>

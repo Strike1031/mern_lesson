@@ -64,9 +64,19 @@ form .form-group button{
   cursor: pointer;
   width: 100%;
   border-radius: 5px;
+  justify-content: center;
+  align-items: center;
 }
 
 form .form-group button:hover {
     opacity: 0.6;
+}
+
+form .form-group button:disabled {
+   background-color: black;
+}
+
+.btn-login {
+    display: flex;
 }
 

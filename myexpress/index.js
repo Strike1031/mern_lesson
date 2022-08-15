@@ -15,6 +15,7 @@ const corsOptions = {
 }
 
 app.use(cors(corsOptions));
+app.use(bodyParser.json());
 // app.use(express.json());
 /**
  *      Routing
@@ -23,7 +24,7 @@ app.get("/", function(req, res, next) {
     res.send("Hello world!");
 });
 
-app.post("/auth/login", urlencondedParser, function(req, res, next) {
+app.post("/auth/login", jsonParser, function(req, res, next) {
     const {username, password} = req.body;
     console.log(req.body);
     res.send("Okay");
