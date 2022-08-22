@@ -11,8 +11,12 @@
     "cors": "^2.8.5",
     "debug": "~2.6.9",
     "express": "~4.16.1",
+    "express-form-data": "^2.0.18",
+    "express-validation": "^4.1.0",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
+    "md5": "^2.3.0",
+    "mongoose": "^6.5.2",
     "morgan": "~1.9.1"
   }
 }

@@ -27,6 +27,14 @@ export default function LoginPage(props) {
 
     async function userLogin(e) {
         e.preventDefault();
+        const pattern = /[a-zA-Z0-9]+[\.]?([a-zA-Z0-9]+)?[\@][a-z]{3,9}[\.][a-z]{2,5}/g;
+        const result = pattern.test(username);
+
+        if (result === false)
+        {
+            return alert("Please type the correct email address");
+        }
+
         if(username === "") {
             return alert("Please type the user name");
         }
@@ -64,11 +72,12 @@ export default function LoginPage(props) {
         /**
          *          AXIOS  Example
          */
-        const info = { "username": username, "password": password };
+        const info = { "email": username, "password": password };
         const headers = { 
             // 'Authorization': 'Bearer my-token',
             // 'My-Custom-Header': 'foobar',
-            'Content-Type': 'applicaton/json',
+            // 'Accept': 'application/json',
+            // 'Content-Type': 'applicaton/json',
             'Access-Control-Allow-Origin': '*'
         };
         await axios.post('http://localhost:5000/auth/login', info, { headers })
@@ -77,9 +86,10 @@ export default function LoginPage(props) {
                     setLoading(false);
                     return alert("Login success");
                 }
-                else
+                else if(response.data === "Incorrect")
                 {
-                    return alert("Username or Password is incorrect");
+                    setLoading(false);
+                    return alert("Username and Password are incorrect");
                 }      
             })
             .catch(error => {

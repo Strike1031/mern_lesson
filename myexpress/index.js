@@ -26,7 +26,7 @@ app.get("/", function(req, res, next) {
 
 app.post("/auth/login", jsonParser, function(req, res, next) {
     const {username, password} = req.body;
-    console.log(req.body);
+    console.log(req);
     res.send("Okay");
 });
 
