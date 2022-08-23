@@ -1,11 +1,17 @@
-import React, { useState,} from "react";
+import React, { useState, } from "react";
+import { Container, Row, Col } from "react-bootstrap";
 import Loading from "../../components/loading";
 import axios from "axios";
-import {ClipLoader} from "react-spinners";
+import { ClipLoader } from "react-spinners";
+import "../../assets/css/landingPage.css";
+
+import logo from '../../assets/images/logo.svg';
+import back1 from '../../assets/images/back1.svg';
+import back2 from '../../assets/images/back2.svg';
 
 export default function LoginPage(props) {
 
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
 
@@ -17,8 +23,8 @@ export default function LoginPage(props) {
     border-color: red;
     `;
 
-    const handleUsernameChange = (e) => {
-        setUsername(e.target.value);
+    const handleEmailChange = (e) => {
+        setEmail(e.target.value);
     };
 
     const handlePasswordChange = (e) => {
@@ -28,24 +34,23 @@ export default function LoginPage(props) {
     async function userLogin(e) {
         e.preventDefault();
         const pattern = /[a-zA-Z0-9]+[\.]?([a-zA-Z0-9]+)?[\@][a-z]{3,9}[\.][a-z]{2,5}/g;
-        const result = pattern.test(username);
+        const result = pattern.test(email);
 
-        if (result === false)
-        {
+        if (result === false) {
             return alert("Please type the correct email address");
         }
 
-        if(username === "") {
+        if (email === "") {
             return alert("Please type the user name");
         }
-        else if(username.length > 255) {
+        else if (email.length > 255) {
             return alert("User's name has maximum 255 characters");
         }
 
-        if(password === "") {
+        if (password === "") {
             return alert("Please type the password");
         }
-        else if(password.length > 255) {
+        else if (password.length > 255) {
             return alert("User's password has maximum 255 characters");
         }
 
@@ -62,7 +67,7 @@ export default function LoginPage(props) {
         // mode: 'no-cors' as RequestMode,  // Used in only typescript
         // method: 'POST',
         // headers: { 'Content-Type': 'application/json' },
-        // body: JSON.stringify({ "username": name, "password": password })
+        // body: JSON.stringify({ "email": name, "password": password })
         // };
         // fetch('http://localhost:5000/auth/login', requestOptions)
         //     .then(response => response.json())
@@ -72,8 +77,8 @@ export default function LoginPage(props) {
         /**
          *          AXIOS  Example
          */
-        const info = { "email": username, "password": password };
-        const headers = { 
+        const info = { "email": email, "password": password };
+        const headers = {
             // 'Authorization': 'Bearer my-token',
             // 'My-Custom-Header': 'foobar',
             // 'Accept': 'application/json',
@@ -86,11 +91,10 @@ export default function LoginPage(props) {
                     setLoading(false);
                     return alert("Login success");
                 }
-                else if(response.data === "Incorrect")
-                {
+                else if (response.data === "Incorrect") {
                     setLoading(false);
-                    return alert("Username and Password are incorrect");
-                }      
+                    return alert("Email and Password are incorrect");
+                }
             })
             .catch(error => {
                 console.error('Post auth login error', error);
@@ -102,24 +106,49 @@ export default function LoginPage(props) {
 
     return (
         <div>
-            {/* {loading && <Loading />} */}
-            <div className="login-panel">
-                <form>
-                    <div className="form-group">
-                        <label>Username</label>
-                        <input type="text" onChange={handleUsernameChange} value={username} />
+            <div className="navbar py-0">
+                <div className="left-pink" />
+                <Container className="navbar-main">
+                    <div>
+                        <img src={logo} width="176px" />
                     </div>
-                    <div className="form-group">
-                        <label>Password</label>
-                        <input type="password" onChange={handlePasswordChange} value={password} />
+                    <div>
                     </div>
-                    <div className="form-group">
-                        <button onClick={userLogin} className="btn-login" disabled={loading}>
-                            <div>Login</div>
-                            <ClipLoader color="green" loading={loading} css={override} size={30}/> 
-                        </button> 
-                    </div>
-                </form>
+                </Container>
+            </div>
+            <div className="landing-main-panel">
+                <Container fluid className="px-0">
+                    <Row>
+                        <Col sm={6} md={6} lg={6} className="px-0">
+                            <div className="left-slider">
+                                <form>
+                                    <div>
+                                        <p className="logo-letter">Log in to Ybalah Guide!</p> 
+                                        <p className="logo-letter2">No account yet? Create an account</p>
+                                    </div>
+                                    <div className="form-group">
+                                        <input type="text" onChange={handleEmailChange} value={email} placeholder="First Nname"/>
+                                        <input type="password" onChange={handlePasswordChange} value={password} placeholder="Last Name" />
+                                    </div>
+                                    <div className="form-group">
+                                        <input type="password" onChange={handlePasswordChange} value={password} />
+                                    </div>
+                                    <div className="form-group">
+                                        <button onClick={userLogin} className="btn-login" disabled={loading}>
+                                            <div>Login</div>
+                                            <ClipLoader color="green" loading={loading} css={override} size={30} />
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </Col>
+                        <Col sm={6} md={6} lg={6} className="px-0">
+                            <div className="right-slider">
+                                <div className="right-slider-opacity" />
+                            </div>
+                        </Col>
+                    </Row>
+                </Container>
             </div>
         </div>
     );

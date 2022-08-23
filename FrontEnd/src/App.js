@@ -1,10 +1,15 @@
 import "./assets/css/main.css";
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap/dist/js/bootstrap.bundle'
 
 import LoginPage from './screens/authentication/LoginPage';
 
 function App() {
   return (
-    <LoginPage />
+    <div className="">
+      <LoginPage />
+    </div>
+
   );
 }
 
